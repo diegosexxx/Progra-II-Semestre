@@ -1,0 +1,51 @@
+
+
+
+
+from api_demo_rickandmorty import API_RM
+import requests
+
+
+print(API_RM)
+
+
+while True:
+    print("\n---------RICK AND MORTY API---------")
+
+
+    nombre = input("\nEscriba el nombre del personaje del que quiera saber (si quiere salir escriba salir): ")
+
+    if nombre.lower().strip() == "salir":
+        print("\nHasta luego!")
+        break
+
+    respuesta = {"name": nombre}
+
+    answer = requests.get(API_RM, params=respuesta)
+    if answer.status_code != 200:
+        print("Algo salió mal:")
+        print(answer.text)
+    else:
+        datos = answer.json()
+
+        if datos["info"]["count"] == 0:
+            print("No se encontró ningún personaje.")
+        else:
+            for personaje in datos["results"]:
+                print("\nNombre:", personaje["name"])
+                print("Estado:", personaje["status"])
+                print("Especie:", personaje["species"])
+                print("Género:", personaje["gender"])
+                print("Origen:", personaje["origin"]["name"])
+
+
+
+
+
+
+
+
+
+
+
+
